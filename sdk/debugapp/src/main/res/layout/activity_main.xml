@@ -6,4 +6,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#D7D7D7"
-    tools:context=".MainActivity" />
+    tools:context=".MainActivity" >
+
+    <LinearLayout
+        android:layout_width="426dp"
+        android:layout_height="660dp"
+        android:orientation="vertical"
+        android:rotationX="0"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="1dp">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Friendly Captcha Android SDK Debug App" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="60dp" />
+
+        <FrameLayout
+            android:id="@+id/mount"
+            android:layout_width="422dp"
+            android:layout_height="126dp">
+
+        </FrameLayout>
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

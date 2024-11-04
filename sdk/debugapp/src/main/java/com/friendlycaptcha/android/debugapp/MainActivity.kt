@@ -23,16 +23,11 @@ class MainActivity : AppCompatActivity() {
         val layout = findViewById<ConstraintLayout>(R.id.main)
 
         val sdk = FriendlyCaptchaSDK(context = this, apiEndpoint = "global")
-        val sitekey = "SOME_SITEKEY"
+        val sitekey = "FCMGD7SIQS6JTVKU"
 
 
         val captchaWidget = sdk.createWidget(sitekey)
-
-        // Add the WebView to the layout
         layout.addView(captchaWidget.webView)
-
-        // Load a test URL to verify the WebView is working
-//        captchaWidget.webView.loadUrl("https://www.example.com")
 
         Log.i("FriendlyCaptcha", "Created widget and loaded test URL")
     }

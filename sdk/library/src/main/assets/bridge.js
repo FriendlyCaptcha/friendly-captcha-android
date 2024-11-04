@@ -1,7 +1,5 @@
-/**
- * By using this instead of the browser built-in URLSearchParams we can save shipping a 11kb polyfill in the polyfilled version.
- * @returns an object like `{a: "3", b: "bla"}`
- */
+// Using this instead of the browser built-in URLSearchParams we can save shipping a 11kb polyfill.
+// returns an object like `{a: "3", b: "bla"}`
 function parseQuery(queryString) {
   var out = {}
   queryString
@@ -22,12 +20,21 @@ var handle;
 
 // Called by the Android app.
 function receiveMessage(msg) {
-    console.log("Received message: ", msg);
+    // URL decode the message
+    msg = decodeURIComponent(msg);
+    console.log("RCV in WebView: ", msg);
+    var m;
     try {
-      var m = JSON.parse(msg);
+      m = JSON.parse(msg);
     }
     catch (e) {
         console.log("Error parsing JSON: " + msg);
+    }
+
+    if (m.type === "frc:widget.start") {
+        handle.start();
+    } else if (m.type === "frc:widget.reset") {
+        handle.reset();
     }
 }
 
@@ -42,6 +49,10 @@ function main() {
         sitekey: fp.sitekey,
         theme: fp.theme,
         lang: fp.language,
+    });
+
+    handle.addEventListener("frc:widget.statechange", function(event) {
+        sendMessage({type: "frc:widget.statechange", detail: event.detail});
     });
 
     sendMessage({type: "ready"});

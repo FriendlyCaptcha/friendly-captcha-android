@@ -8,7 +8,7 @@ import org.json.JSONObject
 import java.net.URLEncoder
 
 
-class FriendlyCaptchaJSInterface(
+class FriendlyCaptchaJSBridge(
     private val listener: (JSONObject) -> Unit,
     private val webView: WebView
 ) {
@@ -27,14 +27,24 @@ class FriendlyCaptchaJSInterface(
     /**
      * Send a string to the WebView. It does basic escaping, but it's not foolproof.
      */
-    fun sendString(message: String) {
-        val encoded = URLEncoder.encode(message.replace("'", "\'"), "UTF-8")
+    private fun sendString(message: String) {
+        val encoded = URLEncoder.encode(
+            message.replace("'", "\\'").replace(" ", "%20"),
+            "UTF-8",
+        )
 
         (webView.context as? android.app.Activity)?.runOnUiThread {
+            // We use `loadUrl` instead of `evaluateJavascript` to support Android < 4.4.
             webView.loadUrl("javascript:window.receiveMessage(%27$encoded%27)")
         }
-        // We use `loadUrl` instead of `evaluateJavascript` to support Android < 4.4.
 
     }
 
+    fun start() {
+        sendString("{\"type\": \"frc:widget.start\"}")
+    }
+
+    fun reset() {
+        sendString("{\"type\": \"frc:widget.reset\"}")
+    }
 }
