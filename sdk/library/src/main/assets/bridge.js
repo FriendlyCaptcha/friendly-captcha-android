@@ -14,21 +14,19 @@ function parseQuery(queryString) {
 }
 
 var fp = parseQuery(window.location.search);
-console.log("fp", JSON.stringify(fp));
+console.debug("Query parameters", JSON.stringify(fp));
 
 var handle;
 
-// Called by the Android app.
+// Called by the Android app. The message is a JSON string that is URL encoded.
 function receiveMessage(msg) {
-    // URL decode the message
     msg = decodeURIComponent(msg);
-    console.log("RCV in WebView: ", msg);
     var m;
     try {
       m = JSON.parse(msg);
     }
     catch (e) {
-        console.log("Error parsing JSON: " + msg);
+        console.error("Error parsing JSON:", msg);
     }
 
     if (m.type === "frc:widget.start") {
@@ -54,9 +52,18 @@ function main() {
     handle.addEventListener("frc:widget.statechange", function(event) {
         sendMessage({type: "frc:widget.statechange", detail: event.detail});
     });
+    handle.addEventListener("frc:widget.complete", function(event) {
+            sendMessage({type: "frc:widget.complete", detail: event.detail});
+        });
+    handle.addEventListener("frc:widget.error", function(event) {
+        sendMessage({type: "frc:widget.error", detail: event.detail});
+    });
+    handle.addEventListener("frc:widget.expire", function(event) {
+        sendMessage({type: "frc:widget.expire", detail: event.detail});
+    });
 
     sendMessage({type: "ready"});
-    console.log("Bridge ready");
+    console.debug("Bridge ready");
 }
 
 if (document.readyState !== "loading") {
@@ -64,8 +71,3 @@ if (document.readyState !== "loading") {
 } else {
     document.addEventListener("DOMContentLoaded", main);
 }
-
-
-
-
-
