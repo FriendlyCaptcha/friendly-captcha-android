@@ -30,7 +30,7 @@ class FriendlyCaptchaWidgetHandle(
      * Response is the `frc-captcha-response` value from the widget, this is the value you should send
      * to your server to verify the captcha.
      */
-    var response: String = ""
+    var response: String = ".UNINITIALIZED"
 
     /**
      * State is the current state of the widget.
@@ -101,6 +101,8 @@ class FriendlyCaptchaWidgetHandle(
                 return true
             }
         }
+
+        println("URL: $url")
 
         loadUrl(this@FriendlyCaptchaWidgetHandle.url)
     }

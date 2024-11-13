@@ -55,7 +55,7 @@ class FriendlyCaptchaSDK(
     @JvmOverloads
     fun createWidget(sitekey: String, theme: String? = null, language: String? = null): FriendlyCaptchaWidgetHandle {
         val languageWithDeviceLanguageFallback = language ?: getDeviceLanguage()
-        var themeWithFallback = theme ?: getConfigurationTheme(context)
+        val themeWithFallback = theme ?: getConfigurationTheme(context)
 
         val widgetHandle = FriendlyCaptchaWidgetHandle(
             context, sitekey, apiEndpoint=apiEndpoint, theme=themeWithFallback, language=languageWithDeviceLanguageFallback,
