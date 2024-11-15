@@ -5,14 +5,18 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
+import android.util.TypedValue
 import android.view.ViewGroup
 import android.webkit.WebChromeClient
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import org.json.JSONObject
 import java.net.URLEncoder
+
+import com.friendlycaptcha.android.sdk.BuildConfig
 
 /**
  * A handle to a FriendlyCaptcha widget.
@@ -36,7 +40,7 @@ class FriendlyCaptchaWidgetHandle(
      * State is the current state of the widget.
      * See the [Lifecycle](https://developer.friendlycaptcha.com/docs/v2/sdk/lifecycle) documentation for more information.
      */
-    var state: String = "uninitialized"
+    var state: String = "init"
 
     /**
      * isReady is a flag that indicates if the widget is ready to receive commands.
@@ -74,8 +78,13 @@ class FriendlyCaptchaWidgetHandle(
         onStateChange = listener
     }
 
+
+    /**
+     * webView is a reference to the WebView used behind the scenes. You shouldn't need to interact with this,
+     * instead you should add `view` to your UI.
+     */
     @SuppressLint("SetJavaScriptEnabled")
-    val webView: WebView = WebView(context).apply {
+    private val webView: WebView = WebView(context).apply {
 
         webViewClient = object : WebViewClient() {
             // Handle links in the WebView so they open in the browser, instead of within the small WebView.
@@ -102,17 +111,81 @@ class FriendlyCaptchaWidgetHandle(
             }
         }
 
-        println("URL: $url")
+        settings.userAgentString = BuildConfig.SDK_NAME + "/" + BuildConfig.SDK_VERSION + " " + settings.userAgentString
 
         loadUrl(this@FriendlyCaptchaWidgetHandle.url)
-    }
 
-    init {
-        // Set layout parameters to match parent
-        webView.layoutParams = ConstraintLayout.LayoutParams(
+        layoutParams = ConstraintLayout.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.MATCH_PARENT
+
         )
+    }
+
+    /**
+     * view is what you should add to your app's UI.
+     * You should be able to wrap it in a plain AndroidView if you're using (Jetpack) Compose.
+     *
+     * In the current version this is an instance of a WebView, in the future it may be a view that contains
+     * a WebView.
+     */
+    val view: android.view.View
+
+
+    init {
+        // Convert 70dp to pixels, that's the default size if not constrained.
+        val maxHeightInPixels = kotlin.math.ceil(
+            TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                70f,
+                context.resources.displayMetrics
+            )
+        ).toInt()
+
+        // 4.0 border radius to pixels
+        val br = kotlin.math.ceil(
+            TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                4f,
+                context.resources.displayMetrics
+            )
+        )
+
+        // Wrap the WebView in a ConstraintLayout to enforce the height constraint - it can still
+        // be smaller.
+        val constraintLayoutInner = ConstraintLayout(context).apply {
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+            maxHeight = maxHeightInPixels
+            addView(webView)
+        }
+
+        // Wrap the WebView in the cardView to allow for rounded corners.
+        val cv = CardView(context).apply {
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT,
+            )
+            radius = br
+            // Prevent a drop shadow
+            cardElevation = 0.0f
+            addView(constraintLayoutInner)
+        }
+
+        // Wrap the CardView in a ConstraintLayout to enforce the height constraint - it can still
+        // be smaller.
+        val constraintLayoutOuter = ConstraintLayout(context).apply {
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+            maxHeight = maxHeightInPixels
+            addView(cv)
+        }
+
+        view = constraintLayoutOuter
     }
 
     @SuppressLint("AddJavascriptInterface")

@@ -20,5 +20,5 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "FriendlyCaptchaAndroidSDK"
-include(":library")
+include(":lib")
 include(":debugapp")

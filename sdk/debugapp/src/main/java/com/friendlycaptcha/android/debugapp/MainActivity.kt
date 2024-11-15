@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
 
 
         val sdk = FriendlyCaptchaSDK(context = this, apiEndpoint = "global")
-        val sitekey = "FCMGD7SIQS6JTVKU"
+        val sitekey = "FCMGD7SIQS6JTVKU" // Not a secret key, you can test with it (but you won't be able to verify the response).
 
         widgetHandle = sdk.createWidget(sitekey)
 
@@ -69,6 +69,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        mount.addView(widgetHandle.webView)
+        mount.addView(widgetHandle.view)
     }
 }

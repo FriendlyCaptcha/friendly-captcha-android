@@ -1,7 +1,11 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.maven.publish)
 }
+
+val sdkVersion by extra("1.0.0")
+val sdkName by extra("friendly-captcha-android")
 
 android {
     namespace = "com.friendlycaptcha.android.sdk"
@@ -9,8 +13,10 @@ android {
 
     defaultConfig {
         minSdk = 16
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "SDK_VERSION", "\"$sdkVersion\"")
+        buildConfigField("String", "SDK_NAME", "\"$sdkName\"")
     }
 
     buildTypes {
@@ -22,6 +28,11 @@ android {
             )
         }
     }
+
+    buildFeatures {
+        buildConfig = true
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -35,6 +46,10 @@ android {
             manifest.srcFile("src/androidTest/AndroidManifest.xml")
         }
     }
+
+    publishing {
+        singleVariant("release")
+    }
 }
 
 afterEvaluate {
@@ -42,6 +57,20 @@ afterEvaluate {
         from(layout.buildDirectory.dir("outputs/aar"))
         into(layout.projectDirectory.dir("../aar-repo"))
         include("*.aar")
+    }
+
+    publishing {
+        publications {
+            create<MavenPublication>("mavenAndroid") {
+                from(components["release"])
+                groupId = "com.friendlycaptcha"
+                artifactId = sdkName
+                version = sdkVersion
+            }
+        }
+        repositories {
+            mavenLocal()
+        }
     }
 }
 
