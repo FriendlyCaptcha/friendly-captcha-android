@@ -152,7 +152,7 @@ fun LoginForm(
 
         AndroidView(
             factory = { _ ->
-                widget.webView
+                widget.view
             },
             // By default the widget height will grow to any size, 80dp is a good default.
             modifier = Modifier.fillMaxWidth().height(60.dp)

@@ -16,8 +16,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import org.json.JSONObject
 import java.net.URLEncoder
 
-import com.friendlycaptcha.android.sdk.BuildConfig
-
 /**
  * A handle to a FriendlyCaptcha widget.
  * You generally don't create this yourself, instead you use [FriendlyCaptchaSDK.createWidget].
@@ -133,11 +131,21 @@ class FriendlyCaptchaWidgetHandle(
 
 
     init {
-        // Convert 70dp to pixels, that's the default size if not constrained.
+        // Convert 70dp to pixels, that's the default height size if not constrained.
         val maxHeightInPixels = kotlin.math.ceil(
             TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP,
                 70f,
+                context.resources.displayMetrics
+            )
+        ).toInt()
+
+        // Maximum width is 420px.. Which seems reasonable. In theory it could be unbounded but
+        // it gets a bit silly.
+        var maxWidthInPixels = kotlin.math.ceil(
+            TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                420f,
                 context.resources.displayMetrics
             )
         ).toInt()
@@ -159,6 +167,7 @@ class FriendlyCaptchaWidgetHandle(
                 ViewGroup.LayoutParams.MATCH_PARENT
             )
             maxHeight = maxHeightInPixels
+            maxWidth = maxWidthInPixels
             addView(webView)
         }
 
@@ -182,6 +191,7 @@ class FriendlyCaptchaWidgetHandle(
                 ViewGroup.LayoutParams.MATCH_PARENT
             )
             maxHeight = maxHeightInPixels
+            maxWidth = maxWidthInPixels
             addView(cv)
         }
 
