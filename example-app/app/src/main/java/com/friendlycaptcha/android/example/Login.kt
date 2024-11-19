@@ -1,5 +1,6 @@
 package com.friendlycaptcha.android.example
 
+import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONException
@@ -15,13 +16,18 @@ data class LoginResponse(
 )
 
 const val ALWAYS_SUCCESS = false
+// This is the URL of the server that will handle the login request.
+// 10.0.2.2 is the alias to your host loopback interface (i.e., localhost) in the Android Emulator.
+const val LOGIN_ENDPOINT_URL = "http://10.0.2.2:3600/login"
 
 suspend fun doLoginRequest(username: String, password: String, captchaResponse: String): LoginResponse {
-    val url = URL("https://example.com/login")
+    // Make sure you are running the server locally before running this code (see README.md and the
+    // server folder).
+    val url = URL(LOGIN_ENDPOINT_URL)
     val json = JSONObject().apply {
         put("username", username)
         put("password", password)
-        put("captchaResponse", captchaResponse)
+        put("frc-captcha-response", captchaResponse)
     }
     val postData = json.toString().toByteArray()
 
@@ -44,15 +50,15 @@ suspend fun doLoginRequest(username: String, password: String, captchaResponse: 
             }
 
             return@withContext try {
-                val responseJson = connection.inputStream.bufferedReader().use {
-                    JSONObject(it.readText())
-                }
+                val responseText = connection.inputStream.bufferedReader().use { it.readText() }
+                val responseJson = JSONObject(responseText)
                 LoginResponse(
                     success = responseJson.getBoolean("success"),
                     message = responseJson.getString("message"),
                     statusCode = statusCode
                 )
             } catch (e: JSONException) {
+                Log.e("example-app", "JSON Exception in parsing response", e)
                 LoginResponse(
                     success = false,
                     message = "Invalid response format",
