@@ -75,7 +75,7 @@ afterEvaluate {
 
                 pom {
                     name.set("Friendly Captcha SDK")
-                    description.set("A Friendly Captcha SDK for Android")
+                    description.set("A SDK for integrating Friendly Captcha into your Android apps.")
                     url.set("https://github.com/FriendlyCaptcha/friendly-captcha-android")
 
                     licenses {
@@ -87,7 +87,7 @@ afterEvaluate {
 
                     developers {
                         developer {
-                            id.set("developer-id")
+                            id.set("friendlycaptcha")
                             name.set("Friendly Captcha Developers")
                             email.set("dev@friendlycaptcha.com")
                         }
@@ -103,14 +103,7 @@ afterEvaluate {
         }
         repositories {
             mavenLocal()
-            maven {
-                name = "maven-repo"
-                url = uri("https://your-maven-repo-url")
-                credentials {
-                    username = project.findProperty("mavenUsername") as String? ?: ""
-                    password = project.findProperty("mavenPassword") as String? ?: ""
-                }
-            }
+            mavenCentral()
         }
     }
 }
