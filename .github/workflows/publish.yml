@@ -20,9 +20,9 @@ jobs:
         uses: gradle/actions/setup-gradle@v3
 
       - name: Check version
-        id: check_version
+        working-directory: sdk
         run: |
-          VERSION=$(grep 'val sdkVersion by extra' sdk/build.gradle.kts | sed 's/.*"\(.*\)".*/\1/')
+          VERSION=$(grep 'val sdkVersion by extra' lib/build.gradle.kts | sed 's/.*"\(.*\)".*/\1/')
           if [ "$VERSION" != "${{ github.event.release.tag_name }}" ]; then
             echo "Version mismatch: build.gradle.kts version is $VERSION, but release tag is ${{ github.event.release.tag_name }}"
             exit 1
