@@ -68,7 +68,7 @@ suspend fun doLoginRequest(username: String, password: String, captchaResponse: 
         } catch (e: IOException) {
             LoginResponse(
                 success = false,
-                message = "Request could not be made",
+                message = "Request could not be made, are you running the server?",
                 statusCode = -1
             )
         }

@@ -15,6 +15,8 @@ To deploy to Maven Local, run the following command:
 
 Create a new release with the correct version number and the Github Action will automatically deploy to Maven Central.
 
+The Github Action is defined in `.github/workflows/publish.yml`. After the Github Actions job finished, the publish step generally still takes another 10 minutes to complete.
+
 #### Manual
 
 Hopefully you will usually deploy through Github Actions - but to do so manually follow these steps:
