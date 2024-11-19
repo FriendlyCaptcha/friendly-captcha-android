@@ -161,7 +161,7 @@ fun LoginForm(
             factory = { _ ->
                 widget.view
             },
-            // By default the widget height will grow to any size, 80dp is a good default.
+            // By default the widget height will grow to any size, 72dp is a good default.
             modifier = Modifier.fillMaxWidth().height(60.dp)
         )
 

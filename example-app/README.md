@@ -13,3 +13,6 @@ To see the end-to-end example you need to run both the server and the app. The i
 
 ## License
 This example app is licensed under the open source MIT License. See the [LICENSE](./LICENSE) file for details.
+
+## Screenshot
+![Screenshot](./screenshot.png)
