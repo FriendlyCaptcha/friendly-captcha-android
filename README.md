@@ -125,6 +125,6 @@ The example app demonstrates how to use the Friendly Captcha SDK in a simple And
 To run the example app, clone this repository and open the [`example-app`](./example-app) directory in Android Studio.
 
 ## License
-The Friendly Captcha Android SDK is released under Mozilla Public License 2.0 (MPL 2.0) license. See the [LICENSE](./sdk/LICENSE) file.
+This is free software; you can redistribute it and/or modify it under the terms of the [Mozilla Public License Version 2.0](./sdk/LICENSE).
 
-All examples are released under the MIT license. See the [LICENSE](./example-app/LICENSE) file.
+All examples are released under the [MIT license](./example-app/LICENSE).
