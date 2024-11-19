@@ -12,7 +12,7 @@ plugins {
     id("com.vanniktech.maven.publish")
 }
 
-val sdkVersion by extra("1.0.0")
+val sdkVersion by extra("1.0.1")
 val sdkName by extra("friendly-captcha-android")
 
 android {
@@ -66,7 +66,7 @@ afterEvaluate {
     mavenPublishing {
         coordinates("com.friendlycaptcha.android", sdkName, sdkVersion)
 
-        publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL, automaticRelease = false)
+        publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL, automaticRelease = true)
         signAllPublications()
 
         pom {
