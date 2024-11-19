@@ -4,13 +4,15 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
+import com.vanniktech.maven.publish.SonatypeHost
+
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.maven.publish)
+    id("com.vanniktech.maven.publish")
 }
 
-val sdkVersion by extra("1.0.0")
+val sdkVersion by extra("1.0.1")
 val sdkName by extra("friendly-captcha-android")
 
 android {
@@ -52,10 +54,6 @@ android {
             manifest.srcFile("src/androidTest/AndroidManifest.xml")
         }
     }
-
-    publishing {
-        singleVariant("release")
-    }
 }
 
 afterEvaluate {
@@ -65,45 +63,38 @@ afterEvaluate {
         include("*.aar")
     }
 
-    publishing {
-        publications {
-            create<MavenPublication>("mavenAndroid") {
-                from(components["release"])
-                groupId = "com.friendlycaptcha.android"
-                artifactId = sdkName
-                version = sdkVersion
+    mavenPublishing {
+        coordinates("com.friendlycaptcha.android", sdkName, sdkVersion)
 
-                pom {
-                    name.set("Friendly Captcha SDK")
-                    description.set("A SDK for integrating Friendly Captcha into your Android apps.")
-                    url.set("https://github.com/FriendlyCaptcha/friendly-captcha-android")
+        publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL, automaticRelease = true)
+        signAllPublications()
 
-                    licenses {
-                        license {
-                            name.set("Mozilla Public License Version 2.0")
-                            url.set("https://www.mozilla.org/en-US/MPL/2.0/")
-                        }
-                    }
+        pom {
+            name.set("Friendly Captcha SDK")
+            description.set("A SDK for integrating Friendly Captcha into your Android apps.")
+            url.set("https://github.com/FriendlyCaptcha/friendly-captcha-android")
+            inceptionYear.set("2024")
 
-                    developers {
-                        developer {
-                            id.set("friendlycaptcha")
-                            name.set("Friendly Captcha Developers")
-                            email.set("dev@friendlycaptcha.com")
-                        }
-                    }
-
-                    scm {
-                        connection.set("scm:git:git://github.com/FriendlyCaptcha/friendly-captcha-android.git")
-                        developerConnection.set("scm:git:ssh://github.com/FriendlyCaptcha/friendly-captcha-android.git")
-                        url.set("https://github.com/FriendlyCaptcha/friendly-captcha-android")
-                    }
+            licenses {
+                license {
+                    name.set("Mozilla Public License Version 2.0")
+                    url.set("https://www.mozilla.org/en-US/MPL/2.0/")
                 }
             }
-        }
-        repositories {
-            mavenLocal()
-            mavenCentral()
+
+            developers {
+                developer {
+                    id.set("friendlycaptcha")
+                    name.set("Friendly Captcha Developers")
+                    email.set("dev@friendlycaptcha.com")
+                }
+            }
+
+            scm {
+                connection.set("scm:git:git://github.com/FriendlyCaptcha/friendly-captcha-android.git")
+                developerConnection.set("scm:git:ssh://github.com/FriendlyCaptcha/friendly-captcha-android.git")
+                url.set("https://github.com/FriendlyCaptcha/friendly-captcha-android")
+            }
         }
     }
 }
@@ -116,7 +107,7 @@ dependencies {
     testImplementation(libs.junit)
     testImplementation(libs.json)
     androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation("androidx.test:core:1.5.0")
+    androidTestImplementation(libs.androidx.core)
     androidTestImplementation(libs.androidx.rules)
     androidTestImplementation(libs.androidx.espresso.core)
 }
