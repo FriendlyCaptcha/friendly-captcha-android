@@ -10,7 +10,7 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    if: github.repository == 'FriendlyCaptcha/friendly-captcha-sdk'
+    if: github.repository == 'FriendlyCaptcha/friendly-captcha-android'
     steps:
       - uses: actions/checkout@v4
 
