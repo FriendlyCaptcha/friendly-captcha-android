@@ -18,18 +18,8 @@ repositories {
 
 dependencies {
     implementation "com.friendlycaptcha:friendlycaptcha-android:1.0.1"
-}
-```
-
-Or for `build.gradle.kts`:
-
-```kotlin
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    implementation("com.friendlycaptcha:friendlycaptcha-android:1.0.1")
+    // Or for `build.gradle.kts`
+    // implementation("com.friendlycaptcha:friendlycaptcha-android:1.0.1")
 }
 ```
 
