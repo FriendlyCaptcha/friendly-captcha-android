@@ -14,6 +14,7 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -24,13 +25,20 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import com.friendlycaptcha.android.sdk.*
 
+// Note: you can use this example sitekey if you only want to see the clientside behavior, but
+// you will not be able to see it work end-to-end (as you won't be able to verify the response on
+// the server).
+//
+// In other words: replace this with your own sitekey when you want to test the full flow.
+const val FRIENDLY_CAPTCHA_SITEKEY = "FCMGD7SIQS6JTVKU"
+
 class MainActivity : ComponentActivity() {
     private val sdk by lazy {
         FriendlyCaptchaSDK(context = this, apiEndpoint = "global")
     }
 
     private val widget by lazy {
-        sdk.createWidget(sitekey = "FCMGD7SIQS6JTVKU")
+        sdk.createWidget(sitekey = FRIENDLY_CAPTCHA_SITEKEY)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,8 +66,8 @@ class MainActivity : ComponentActivity() {
                                     )
                                     finish()
                                 } else {
-                                    // We must reset the widget after a failed attempt, the captcha response
-                                    // can only be used once.
+                                    // We must reset the widget after a failed attempt,
+                                    // the captcha response can only be used once.
                                     widget.reset()
                                     setMessage(response.message)
                                 }
@@ -94,17 +102,15 @@ fun LoginForm(
 
     widget.setOnStateChangeListener { event ->
         captchaResponse.value = event.response
-        if (event.state == "reset") {
-            buttonEnabled = false
-        } else if (event.state == "completed") {
-            buttonEnabled = true
-        } else if (event.state == "expired") {
+
+        when (event.state) {
+            "reset" -> buttonEnabled = false
+            "completed" -> buttonEnabled = true
             // The user will be able to restart the widget by clicking it.
-            buttonEnabled = false
-        } else if (event.state == "error") {
-            // We enable on errors too, if Friendly Captcha is misbehaving (i.e. it's offline),
+            "expired" -> buttonEnabled = false
+            // We enable the button on errors too, if Friendly Captcha is misbehaving (i.e. it's offline),
             // the user can still submit the form (albeit without a valid captcha response).
-            buttonEnabled = true
+            "error" -> buttonEnabled = true
         }
     }
 
@@ -140,6 +146,7 @@ fun LoginForm(
             onValueChange = { password.value = it },
             label = { Text("Password") },
             shape = RoundedCornerShape(8.dp),
+            visualTransformation = PasswordVisualTransformation(),
             modifier = Modifier
                 .fillMaxWidth()
                 .onFocusChanged { focusState ->
@@ -199,6 +206,9 @@ fun LoginForm(
 @Composable
 fun LoginFormPreview() {
     FriendlyCaptchaExampleAppTheme {
-        LoginForm(onLoginClicked = { _, _, _, _, _ -> }, widget = FriendlyCaptchaSDK(LocalContext.current).createWidget(sitekey = "FCMGD7SIQS6JTVKU"))
+        LoginForm(
+            onLoginClicked = { _, _, _, _, _ -> },
+            widget = FriendlyCaptchaSDK(LocalContext.current).createWidget(sitekey = FRIENDLY_CAPTCHA_SITEKEY),
+        )
     }
 }

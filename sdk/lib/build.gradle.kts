@@ -1,3 +1,9 @@
+/*!
+ * Copyright (c) Friendly Captcha GmbH 2024.
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ */
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
@@ -63,13 +69,48 @@ afterEvaluate {
         publications {
             create<MavenPublication>("mavenAndroid") {
                 from(components["release"])
-                groupId = "com.friendlycaptcha"
+                groupId = "com.friendlycaptcha.android"
                 artifactId = sdkName
                 version = sdkVersion
+
+                pom {
+                    name.set("Friendly Captcha SDK")
+                    description.set("A Friendly Captcha SDK for Android")
+                    url.set("https://github.com/FriendlyCaptcha/friendly-captcha-android")
+
+                    licenses {
+                        license {
+                            name.set("Mozilla Public License Version 2.0")
+                            url.set("https://www.mozilla.org/en-US/MPL/2.0/")
+                        }
+                    }
+
+                    developers {
+                        developer {
+                            id.set("developer-id")
+                            name.set("Friendly Captcha Developers")
+                            email.set("dev@friendlycaptcha.com")
+                        }
+                    }
+
+                    scm {
+                        connection.set("scm:git:git://github.com/FriendlyCaptcha/friendly-captcha-android.git")
+                        developerConnection.set("scm:git:ssh://github.com/FriendlyCaptcha/friendly-captcha-android.git")
+                        url.set("https://github.com/FriendlyCaptcha/friendly-captcha-android")
+                    }
+                }
             }
         }
         repositories {
             mavenLocal()
+            maven {
+                name = "maven-repo"
+                url = uri("https://your-maven-repo-url")
+                credentials {
+                    username = project.findProperty("mavenUsername") as String? ?: ""
+                    password = project.findProperty("mavenPassword") as String? ?: ""
+                }
+            }
         }
     }
 }

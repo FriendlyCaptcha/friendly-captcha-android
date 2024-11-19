@@ -1,9 +1,23 @@
+/*!
+ * Copyright (c) Friendly Captcha GmbH 2024.
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ */
 package com.friendlycaptcha.android.sdk
 
 import org.json.JSONObject
 
 open class FriendlyCaptchaWidgetEvent(
     val name: String,
+    /**
+     * The current state of the widget. This is one of the following:
+     * "init" | "reset" | "unactivated" | "activating" | "activated" | "requesting" | "solving" | "verifying" | "completed" | "expired" | "error" | "destroyed"
+     *
+     * See the [Lifecycle](https://developer.friendlycaptcha.com/docs/v2/sdk/lifecycle) documentation for more information.
+     *
+     * @see FriendlyCaptchaWidgetState
+     */
     val state: String,
     val response: String,
     val id: String

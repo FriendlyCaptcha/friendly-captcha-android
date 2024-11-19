@@ -1,3 +1,10 @@
+/*!
+ * Copyright (c) Friendly Captcha GmbH 2024.
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ */
+
 // Using this instead of the browser built-in URLSearchParams we can save shipping a 11kb polyfill.
 // returns an object like `{a: "3", b: "bla"}`
 function parseQuery(queryString) {
@@ -62,7 +69,7 @@ function main() {
         sendMessage({type: "frc:widget.expire", detail: event.detail});
     });
 
-    sendMessage({type: "ready"});
+    sendMessage({type: "ready", "id": handle.id});
     console.debug("Bridge ready");
 }
 

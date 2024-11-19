@@ -45,19 +45,19 @@ class MainActivity : AppCompatActivity() {
         }
 
         // We could also check for event.state == "complete" in the `onStateChangeListener` above, but let's exercise the different listeners below.
-        widgetHandle.setOnCompleteListener { event ->
+        widgetHandle.setOnCompleteListener { _ ->
             runOnUiThread {
                 submitButton.isEnabled = true
             }
         }
 
-        widgetHandle.setOnErrorListener { event ->
+        widgetHandle.setOnErrorListener { _ ->
             runOnUiThread {
                 submitButton.isEnabled = true
             }
         }
 
-        widgetHandle.setOnExpireListener { event ->
+        widgetHandle.setOnExpireListener { _ ->
             runOnUiThread {
                 submitButton.isEnabled = false
             }
@@ -70,5 +70,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         mount.addView(widgetHandle.view)
+
+        // When submit button is pressed, we reset the widget
+        submitButton.setOnClickListener {
+            widgetHandle.reset()
+            submitButton.isEnabled = false
+        }
     }
 }
