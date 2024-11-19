@@ -39,6 +39,12 @@ You can find the latest version number on the [Releases](https://github.com/Frie
 
 See the documentation for the full API reference [here](https://javadoc.io/doc/com.friendlycaptcha.android/friendly-captcha-android).
 
+## Supported Platforms
+
+The SDK supports **Android 4.1 Jelly Bean** (API level 16, released June 2012) and above. 
+
+This SDK is written in Kotlin and is compatible with both Kotlin and Java.
+
 ## Usage
 
 ### Kotlin (Compose)
