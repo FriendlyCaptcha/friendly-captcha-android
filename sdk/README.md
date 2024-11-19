@@ -11,6 +11,12 @@ To deploy to Maven Local, run the following command:
 
 ### Maven Central
 
+#### Github Actions
+
+Create a new release with the correct version number and the Github Action will automatically deploy to Maven Central.
+
+#### Manual
+
 Hopefully you will usually deploy through Github Actions - but to do so manually follow these steps:
 
 Create a GPG key and publish it, you can follow the instructions [here](https://central.sonatype.org/pages/working-with-pgp-signatures.html).
