@@ -12,7 +12,7 @@ plugins {
     id("com.vanniktech.maven.publish")
 }
 
-val sdkVersion by extra("1.0.1")
+val sdkVersion by extra("1.0.2")
 val sdkName by extra("friendly-captcha-android")
 
 android {

@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.2
+**Date**: 2024-11-19
+
+* Make the constants on `FriendlyCaptchaWidgetState` easier to use from Java.
+
 ## 1.0.1
 **Date**: 2024-11-19
 

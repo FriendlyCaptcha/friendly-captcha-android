@@ -15,67 +15,79 @@ class FriendlyCaptchaWidgetState {
             /**
              * The widget is being initialized, it was probably just created.
              */
-            const val INIT = "init"
+            @JvmField
+            val INIT = "init"
 
             /**
              * The widget was just reset - it will be `ready` again soon.
              */
-            const val RESET = "reset"
+            @JvmField
+            val RESET = "reset"
 
             /**
              * The widget is not yet activated. This means the widget is ready to be triggered so
              * it can start solving (in the background). It can be triggered by calling `start()`,
              * or by the user clicking the widget.
              */
-            const val UNACTIVATED = "unactivated"
+            @JvmField
+            val UNACTIVATED = "unactivated"
 
             /**
              * The widget is being activated. This means the widget is talking to the server to
              * request a challenge.
              */
-            const val ACTIVATING = "activating"
+            @JvmField
+            val ACTIVATING = "activating"
 
             /**
              * The widget is activated and awaiting user interaction in the form of a click
              * to continue (if the widget is in `interactive` mode).
              */
-            const val ACTIVATED = "activated"
+            @JvmField
+            val ACTIVATED = "activated"
 
             /**
              * The widget is requesting the final challenge from the server.
              */
-            const val REQUESTING = "requesting"
+            @JvmField
+            val REQUESTING = "requesting"
 
             /**
              * The widget is solving the challenge.
              */
-            const val SOLVING = "solving"
+            @JvmField
+            val SOLVING = "solving"
 
             /**
              * The widget is verifying the solution, which means it is talking to the server to
              * receive the final verification response - which is what you will need to send
              * to your own server to verify.
              */
-            const val VERIFYING = "verifying"
+            @JvmField
+            val VERIFYING = "verifying"
             /**
              * The widget has completed the challenge solving process.
              */
-            const val COMPLETED = "completed"
+            @JvmField
+            val COMPLETED = "completed"
 
             /**
              * The widget has expired. This can happen if the user has waited a long time without
              * using the captcha response. The user can click the widget to start again.
              */
-            const val EXPIRED = "expired"
+            @JvmField
+            val EXPIRED = "expired"
 
             /**
              * The widget has encountered an error.
              */
-            const val ERROR = "error"
+            @JvmField
+            val ERROR = "error"
 
             /**
              * The widget has been destroyed. This means it is no longer usable.
              */
-            const val DESTROYED = "destroyed"
+            @JvmField
+            val DESTROYED = "destroyed"
         }
 }
