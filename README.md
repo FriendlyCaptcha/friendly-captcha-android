@@ -3,7 +3,7 @@
 [![Maven Central Version](https://img.shields.io/maven-central/v/com.friendlycaptcha.android/friendly-captcha-android)
 ](https://central.sonatype.com/artifact/com.friendlycaptcha.android/friendly-captcha-android) [![javadoc](https://javadoc.io/badge2/com.friendlycaptcha.android/friendly-captcha-android/javadoc.svg)](https://javadoc.io/doc/com.friendlycaptcha.android/friendly-captcha-android) 
 
-The Friendly Captcha Android SDK allows you to easily integrate Friendly Captcha into your Android applications.
+The Friendly Captcha Android SDK allows you to easily integrate [Friendly Captcha](https://friendlycaptcha.com) into your Android applications.
 
 > This SDK is for **Friendly Captcha v2**.
 
