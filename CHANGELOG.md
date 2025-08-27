@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.1.0
+**Date**: 2025-08-27
+
+* Fix custom languages not working (#7).
+* Fix icons being overwritten by Friendly Captcha SDK in some cases (#9).
+* Fix name clashes with other libraries for assets such as `index.html (#11).
+* Update embedded `@friendly-captcha/sdk` to latest version ([v0.1.32](https://www.npmjs.com/package/@friendlycaptcha/sdk/v/0.1.32)).
+
 ## 1.0.2
 **Date**: 2024-11-19
 
