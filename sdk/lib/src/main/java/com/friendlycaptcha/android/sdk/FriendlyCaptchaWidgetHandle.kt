@@ -70,7 +70,7 @@ class FriendlyCaptchaWidgetHandle(
     private var startPending = false
 
 
-    private val url: String = "file:///android_asset/index.html?" +
+    private val url: String = "file:///android_asset/friendlycaptcha/frc_index.html?" +
             "sitekey=${URLEncoder.encode(sitekey, "UTF-8")}" +
             "&endpoint=${URLEncoder.encode(apiEndpoint, "UTF-8")}" +
             "&theme=${URLEncoder.encode(theme, "UTF-8")}" +

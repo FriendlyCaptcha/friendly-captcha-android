@@ -53,7 +53,7 @@ function main() {
         apiEndpoint: fp.endpoint,
         sitekey: fp.sitekey,
         theme: fp.theme,
-        lang: fp.language,
+        language: fp.language,
     });
 
     handle.addEventListener("frc:widget.statechange", function(event) {
