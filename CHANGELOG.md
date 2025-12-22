@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.1
+**Date**: 2025-12-22
+
+* Add a guard against starting an Activity from a non-Activity context.
+* Update embedded `@friendlycaptcha/sdk` to latest version ([v0.1.36](https://www.npmjs.com/package/@friendlycaptcha/sdk/v/0.1.36)).
+
 ## 1.1.0
 **Date**: 2025-08-27
 
