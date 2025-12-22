@@ -139,6 +139,9 @@ class FriendlyCaptchaWidgetHandle(
                 }
                 url?.let {
                     val intent = Intent(Intent.ACTION_VIEW, Uri.parse(it))
+                    if (context !is android.app.Activity) {
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    }
                     context.startActivity(intent)
                     return true
                 }
