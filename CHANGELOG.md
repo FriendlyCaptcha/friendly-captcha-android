@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.2
+**Date**: 2026-01-20
+
+* Update embedded `@friendlycaptcha/sdk` to latest version ([v0.1.37](https://www.npmjs.com/package/@friendlycaptcha/sdk/v/0.1.37)).
+
+
 ## 1.1.1
 **Date**: 2025-12-22
 
