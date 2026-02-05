@@ -12,7 +12,7 @@ plugins {
     id("com.vanniktech.maven.publish")
 }
 
-val sdkVersion by extra("1.1.2")
+val sdkVersion by extra("1.1.3")
 val sdkName by extra("friendly-captcha-android")
 
 android {
@@ -103,7 +103,7 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
-    implementation(libs.androidx.rules)
+    testImplementation(libs.androidx.rules)
     testImplementation(libs.junit)
     testImplementation(libs.json)
     androidTestImplementation(libs.androidx.junit)
