@@ -17,9 +17,9 @@ repositories {
 }
 
 dependencies {
-    implementation "com.friendlycaptcha.android:friendly-captcha-android:1.1.2"
+    implementation "com.friendlycaptcha.android:friendly-captcha-android:1.1.3"
     // Or for `build.gradle.kts`
-    // implementation("com.friendlycaptcha.android:friendly-captcha-android:1.1.2")
+    // implementation("com.friendlycaptcha.android:friendly-captcha-android:1.1.3")
 }
 ```
 
